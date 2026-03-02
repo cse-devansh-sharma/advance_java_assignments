@@ -49,5 +49,19 @@ public class StudentController {
 		studentService.deleteStudent(id);
 		return ResponseEntity.ok("Student deleted successfully");
 	}
+	
+	@GetMapping("/specific/{name}")
+	public ResponseEntity<List<Student>> getStudentWithSpecificNames(@PathVariable String name){
+		List<Student> students=studentService.specificNames(name);
+		return ResponseEntity.ok(students);
+	}
+	
+	@GetMapping("/specificsurname/{surname}")
+	public ResponseEntity<List<Student>> getSpecificSurnames(@PathVariable String surname){
+		List<Student> surnames=studentService.specificSurnames(surname);
+		return ResponseEntity.ok(surnames);
+	}
+	
+	
 
 }

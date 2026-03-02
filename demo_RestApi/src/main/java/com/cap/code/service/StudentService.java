@@ -16,8 +16,10 @@ public class StudentService {
 	}
 	
 	public List<Student>  getAllStudents(){
-		return studentRepository.findAll();
+		return studentRepository.findAllByOrderByNameDesc();
 	}
+	
+	
 	
 	public Student saveStudent(Student student) {
 		studentRepository.save(student);
@@ -45,6 +47,14 @@ public class StudentService {
 
         studentRepository.delete(existingStudent);
     }
+	
+	public List<Student> specificNames(String prefix){
+		return studentRepository.findByNameStartingWith(prefix);
+	}
+	
+	public List<Student> specificSurnames(String suffix){
+		return studentRepository.findByNameEndingWith(suffix);
+	}
 	
 	
 }
