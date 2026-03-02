@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #050d1a;
+            color: #e8edf5;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .page-header h2 span {
+            color: #4f9cf9;
+        }
+
+        /* Record count box */
+        .record-count {
+            background-color: #0f2240;
+            border: 1px solid rgba(79, 156, 249, 0.3);
+            border-radius: 10px;
+            padding: 12px 20px;
+            text-align: center;
+        }
+
+        .record-count .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #4f9cf9;
+            display: block;
+        }
+
+        .record-count .label {
+            font-size: 11px;
+            color: #7a92b4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Table wrapper */
+        .table-wrapper {
+            background-color: #0a1628;
+            border: 1px solid rgba(79, 156, 249, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            background-color: #142d58;
+        }
+
+        th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4f9cf9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(79, 156, 249, 0.2);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(79, 156, 249, 0.08);
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(79, 156, 249, 0.05);
+        }
+
+        td {
+            padding: 16px 20px;
+            font-size: 14px;
+        }
+
+        td:nth-child(1) { color: #7a92b4; font-weight: 600; }
+        td:nth-child(2) { color: #ffffff; font-weight: 500; }
+        td:nth-child(3) { color: #4f9cf9; }
+        td:nth-child(4) { color: #00e5c0; }
+        td:nth-child(5) { color: #7a92b4; }
+
+        /* Empty state */
+        .empty-msg td {
+            text-align: center;
+            padding: 40px;
+            color: #7a92b4;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 24px;
+        }
+
+        .add-btn {
+            display: inline-block;
+            background-color: #4f9cf9;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .add-btn:hover {
+            background-color: #2e7de0;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="page-header">
+            <h2>Customer <span>Directory</span></h2>
+            <div class="record-count">
+                <span class="number" th:text="${#lists.size(customer)}">0</span>
+                <span class="label">Total Records</span>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${customer}">
+                        <td th:text="${c.customerId}">ID</td>
+                        <td th:text="${c.name}">Name</td>
+                        <td th:text="${c.email}">Email</td>
+                        <td th:text="${c.phone}">Phone</td>
+                        <td th:text="${c.address}">Address</td>
+                    </tr>
+                    <tr class="empty-msg" th:if="${#lists.isEmpty(customer)}">
+                        <td colspan="5">No customers found. Add one to get started.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <a href="/addCustomer" class="add-btn">+ Add New Customer</a>
+        </div>
+
+    </div>
+</body>
+</html>
