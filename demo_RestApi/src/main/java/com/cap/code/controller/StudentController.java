@@ -1,6 +1,7 @@
 package com.cap.code.controller;
 
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +63,17 @@ public class StudentController {
 		return ResponseEntity.ok(surnames);
 	}
 	
+	 @GetMapping("/pages")
+	    public ResponseEntity<Page<Student>> getStudents(
+	            @RequestParam int page,
+	            @RequestParam int size,
+	            @RequestParam(defaultValue = "name") String sortBy,
+	            @RequestParam(defaultValue = "asc") String direction) {
+
+	        Page<Student> students = studentService.getAllStudents(page, size, sortBy, direction);
+
+	        return ResponseEntity.ok(students);
+	    }
 	
 
 }

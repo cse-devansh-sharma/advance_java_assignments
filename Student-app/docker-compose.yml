@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8090:8080"
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: studentsdb
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: 14567
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3308:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
