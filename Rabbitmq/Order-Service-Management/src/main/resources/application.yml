@@ -1,0 +1,30 @@
+spring:
+  # H2 in-memory database — no PostgreSQL setup needed to run this
+  datasource:
+    url: jdbc:h2:mem:ordersdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop   # creates tables on startup, drops on shutdown
+    show-sql: true            # logs every SQL query so you can see DB activity
+  h2:
+    console:
+      enabled: true           # visit http://localhost:8080/h2-console to see the DB
+
+  # RabbitMQ connection — defaults work if you run RabbitMQ locally or via Docker
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3       # retry failed messages 3 times before giving up
+          initial-interval: 2000
+
+rabbitmq:
+  queue: orders.queue           # referenced in @RabbitListener above
